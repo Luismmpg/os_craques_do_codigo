@@ -120,8 +120,8 @@ print(":::::: O Jogo da Forca - Versão Torre de Belém ::::::")
 print(forca_torre[5])
 
 print("Escolha o modo de jogo:")
-print("1. Palavra secreta escolhida aleatóriamente de uma lista")
-print("2. Palavra secreta à sua escolha")
+print("1. Palavra secreta escolhida aleatóriamente de uma lista.")
+print("2. Palavra secreta à sua escolha.")
 print()
 
 lista_palavras = [
@@ -134,34 +134,34 @@ lista_palavras = [
     "python",
 ]
 
-escolha = input("Introduza 1 ou 2 para escolher o modo de jogo")
+escolha = input("Introduza 1 ou 2 para escolher o modo de jogo: ")
 
 while continuar == False:
     if escolha == "1":
         palavra_secreta = random.choice(lista_palavras)
         continuar = True
         os.system("cls")
-        print("optou por jogar com uma palavra aleatoria")
+        print("Optou por jogar com uma palavra aleatoria.")
         print()
     elif escolha == "2":
         os.system("cls")
-        print("optou por jogar com uma palavra escolhida por si")
+        print("Optou por jogar com uma palavra escolhida por si.")
         print()
-        palavra_secreta = input("escreva uma palavra a ser adivinhada: ").lower()
+        palavra_secreta = input("Escreva uma palavra a ser adivinhada: ").lower()
         continuar = True
         os.system("cls")
     else:
         continuar = False
-        escolha = input("esse numero nao e valido escolha 1 ou 2 ")
+        escolha = input("Esse número não é válido, escolha 1 ou 2: ")
 
 while tentativas > 0:
     letras_certas = 0
     print()
-    adivinha_a_letra = input("adivinhe uma letra ").lower()
+    adivinha_a_letra = input("Adivinhe uma letra: ").lower()
     print()
     if adivinha_a_letra in letras_utilizadas:
-        print("essa letra ja foi usada, tente de novo")
-        print("letras usadas", letras_utilizadas)
+        print("Essa letra já foi usada, tente de novo.")
+        print("Letras usadas:", letras_utilizadas)
         print()
         continue
     else:
@@ -170,13 +170,13 @@ while tentativas > 0:
             tentativas -= 1
             fase_forca -= 1
             print(forca_torre[fase_forca - 1])
-            print("essa letra nao esta na palavra,restam ", tentativas, "tentativas")
+            print("Essa letra não está na palavra, restam", tentativas, "tentativas!")
             print()
-            print("letras usadas", letras_utilizadas)
+            print("Letras usadas:", letras_utilizadas)
         if tentativas == 0:
             print()
-            print("voce perdeu,esgotou as 5 tentativas")
-            print("a palavra secreta era:", palavra_secreta)
+            print("Você perdeu, esgotou as 5 tentativas.")
+            print("A palavra secreta era:", palavra_secreta)
             print()
             break
 
