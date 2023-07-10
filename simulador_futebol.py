@@ -30,7 +30,10 @@ janela = tk.Tk()
 janela.title("Simulador de Futebol")
 janela.geometry("600x400")
 
-lista_jogadores = tk.Listbox(janela)
+frame_lista_jogadores = tk.Frame(janela)
+frame_lista_jogadores.pack(side=tk.LEFT)
+
+lista_jogadores = tk.Listbox(frame_lista_jogadores, width=25, height=20)
 lista_jogadores.insert(1, "Paulo Perneta")
 lista_jogadores.insert(2, "Cristiano McDonald")
 lista_jogadores.insert(3, "Marco Orelhas")
@@ -43,10 +46,6 @@ lista_jogadores.insert(9, "João Canudinho")
 
 lista_jogadores.pack()
 
-
-lista_jogadores_selecionados = tk.Listbox(janela)
-lista_jogadores_selecionados.pack()
-
 botao_adicionar_jogador = tk.Button(
     janela,
     text="Adicionar Jogador",
@@ -54,12 +53,21 @@ botao_adicionar_jogador = tk.Button(
 )
 botao_adicionar_jogador.pack()
 
+frame_lista_jogadores_selecionados = tk.Frame(janela)
+frame_lista_jogadores_selecionados.pack(side=tk.RIGHT)
+
+lista_jogadores_selecionados = tk.Listbox(frame_lista_jogadores_selecionados, width=25, height=20)
+lista_jogadores_selecionados.pack()
+
+
+
 botao_remover_jogador = tk.Button(
     janela,
     text="Remover Jogador",
     command=lambda: remover_jogador(lista_jogadores_selecionados, lista_jogadores),
 )
 botao_remover_jogador.pack()
+
 
 
 janela.mainloop()
