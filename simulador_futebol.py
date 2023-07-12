@@ -1,4 +1,5 @@
 import tkinter as tk
+import random
 from tkinter import messagebox
 
 
@@ -44,10 +45,13 @@ lista_jogadores.insert(7, "Ricardo Hortícola")
 lista_jogadores.insert(8, "Nelsom Sem Medo")
 lista_jogadores.insert(9, "João Canudinho")
 
-lista_jogadores.pack()
+lista_jogadores.pack(side=tk.TOP)
+
+frame_botao_adicionar_jogador = tk.Frame(frame_lista_jogadores)
+frame_botao_adicionar_jogador.pack(side=tk.BOTTOM)
 
 botao_adicionar_jogador = tk.Button(
-    janela,
+    frame_botao_adicionar_jogador,
     text="Adicionar Jogador",
     command=lambda: adicionar_jogador(lista_jogadores, lista_jogadores_selecionados),
 )
@@ -56,17 +60,37 @@ botao_adicionar_jogador.pack()
 frame_lista_jogadores_selecionados = tk.Frame(janela)
 frame_lista_jogadores_selecionados.pack(side=tk.RIGHT)
 
+
 lista_jogadores_selecionados = tk.Listbox(frame_lista_jogadores_selecionados, width=25, height=20)
-lista_jogadores_selecionados.pack()
+lista_jogadores_selecionados.pack(side=tk.TOP)
 
 
+frame_botao_remover_jogador = tk.Frame(frame_lista_jogadores_selecionados)
+frame_botao_remover_jogador.pack(side=tk.BOTTOM)
 
 botao_remover_jogador = tk.Button(
-    janela,
+    frame_botao_remover_jogador,
     text="Remover Jogador",
     command=lambda: remover_jogador(lista_jogadores_selecionados, lista_jogadores),
 )
 botao_remover_jogador.pack()
+
+def abrir_janela_jogo():
+    janela_jogo = tk.Tk()
+    janela_jogo.title("Janela de Partida")
+    janela_jogo.geometry("600x400")
+
+    equipa1 = "benfica"
+    equipa2 = "porto"
+    def simulador_jogo(self):
+        resultado = random.choice(['Vitória', 'Derrota', 'Empate'])
+        tk.Label(self, text=f"Resultado do jogo: {resultado}")
+
+    janela_jogo.mainloop()
+
+
+botao_jogar = tk.Button(janela, text="Jogar Partida", command=abrir_janela_jogo)
+botao_jogar.pack()
 
 
 
