@@ -54,6 +54,123 @@ def abrir_janela_config():
     )
     titulo_config.place(relx=0.5, rely=0.09, anchor=tk.CENTER)
 
+    # Adicionar informação para seleção de jogadores e equipa
+    titulo_config_escolha = tk.Label(
+        janela_config,
+        text="Selecione os jogadores que\n deseja convocar para a partida.\n\nEscolha depois a equipa\ncom que pretende jogar.",
+        font=("Arial", 13),
+        fg="yellow",
+        bg="darkgreen",
+        highlightbackground=janela_config.cget("background"),
+    )
+    titulo_config_escolha.place(relx=0.5, rely=0.29, anchor=tk.CENTER)
+
+    # Informação de número de jogadores convocados
+    label_contagem = tk.Label(
+        janela_config,
+        text="Total de convocados: 0",
+        font=("Arial", 11),
+        fg="yellow",
+        bg="darkgreen",
+    )
+    label_contagem.place(relx=0.78, rely=0.08, anchor=tk.CENTER)
+
+    label_equipa_escolhida = tk.Label(
+        janela_config,
+        font=("Arial", 13),
+        fg="yellow",
+        bg="darkgreen",
+    )
+    label_equipa_escolhida.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
+
+    # Criar Listbox com lista de jogadores disponíveis
+    lista_jogadores = tk.Listbox(janela_config, width=25, height=22)
+    lista_jogadores.place(relx=0.22, rely=0.4, anchor=tk.CENTER)
+
+    lista_jogadores.insert(1, "Paulo Perneta")
+    lista_jogadores.insert(2, "Cristiano McDonald")
+    lista_jogadores.insert(3, "Marco Orelhas")
+    lista_jogadores.insert(4, "Luis Abêbera")
+    lista_jogadores.insert(5, "Pepe Rápido")
+    lista_jogadores.insert(6, "João Feliz")
+    lista_jogadores.insert(7, "Ricardo Hortícola")
+    lista_jogadores.insert(8, "Nelsom Sem Medo")
+    lista_jogadores.insert(9, "João Canudinho")
+    lista_jogadores.insert(10, "Leandro Pessi")
+    lista_jogadores.insert(11, "Eussábio")
+    lista_jogadores.insert(12, "Fernando Cabana")
+    lista_jogadores.insert(13, "Diogo Cereais")
+    lista_jogadores.insert(14, "José Chá")
+    lista_jogadores.insert(15, "Fábio Pimentão")
+    lista_jogadores.insert(16, "Diogo Kapa")
+    lista_jogadores.insert(17, "Diogo Dasort")
+    lista_jogadores.insert(18, "Dário Exulo")
+    lista_jogadores.insert(19, "Acácio Mosquito")
+    lista_jogadores.insert(20, "Alfredo das Baladas")
+    lista_jogadores.insert(21, "Carlos Cebolinha")
+    lista_jogadores.insert(22, "Peko")
+
+    # Cria Listbox com lista de jogadores selecionados
+    lista_jogadores_selecionados = tk.Listbox(janela_config, width=25, height=22)
+    lista_jogadores_selecionados.place(relx=0.78, rely=0.4, anchor=tk.CENTER)
+
+    jogadores_selecionados = {}
+
+    def adicionar_jogador(lista_jogadores, lista_jogadores_selecionados):
+        jogador_add = lista_jogadores.get(lista_jogadores.curselection())
+        if jogador_add:
+            lista_jogadores_selecionados.insert("end", jogador_add)
+            lista_jogadores.delete(lista_jogadores.curselection())
+
+            # Aumentar o contador do jogador selecionado
+            if jogador_add in jogadores_selecionados:
+                jogadores_selecionados[jogador_add] += 1
+            else:
+                jogadores_selecionados[jogador_add] = 1
+
+            # Atualizar o contador
+            atualizar_contagem()
+
+    def remover_jogador(lista_jogadores_selecionados, lista_jogadores):
+        jogador_del = lista_jogadores_selecionados.get(
+            lista_jogadores_selecionados.curselection()
+        )
+        if jogador_del:
+            lista_jogadores.insert("end", jogador_del)
+            lista_jogadores_selecionados.delete(
+                lista_jogadores_selecionados.curselection()
+            )
+
+            # Diminuir o contador
+            if jogador_del in jogadores_selecionados:
+                jogadores_selecionados[jogador_del] -= 1
+            else:
+                jogadores_selecionados[jogador_del] = 1
+
+            atualizar_contagem()
+
+    def atualizar_contagem():
+        total = sum(jogadores_selecionados.values())
+        label_contagem.config(text=f"Total de convocados: {total}")
+
+    # Botão para adicionar jogador
+    botao_esquerda = tk.Button(
+        janela_config,
+        text="Adicionar Jogador",
+        command=lambda: adicionar_jogador(
+            lista_jogadores, lista_jogadores_selecionados
+        ),
+    )
+    botao_esquerda.place(relx=0.22, rely=0.73, anchor=tk.CENTER)
+
+    # Botão para remover jogador
+    botao_direita = tk.Button(
+        janela_config,
+        text="Remover Jogador",
+        command=lambda: remover_jogador(lista_jogadores_selecionados, lista_jogadores),
+    )
+    botao_direita.place(relx=0.78, rely=0.73, anchor=tk.CENTER)
+
     janela_config.mainloop()
 
 
