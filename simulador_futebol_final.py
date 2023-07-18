@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+import random
 
 
 def abrir_janela_config():
@@ -56,6 +57,76 @@ def abrir_janela_config():
             "Casa Pia",
             "Gil Vicente",
         ]
+
+        def terminar_simulacao():
+            janela_jogo.destroy()
+            janela_config.destroy()
+            menu.destroy()
+
+        def voltar_inicio():
+            janela_jogo.destroy()
+
+        def executar_jogo():
+            if equipas_adversarias:
+                adversario = equipas_adversarias.pop(0)
+                golos_marcados = random.randint(0, 6)
+                golos_sofridos = random.randint(0, 6)
+                resultado = ""
+
+                if golos_marcados > golos_sofridos:
+                    resultado = "Vitória"
+                elif golos_marcados < golos_sofridos:
+                    resultado = "Derrota"
+                else:
+                    resultado = "Empate"
+
+                resultado_jogo = f"{equipa} vs {adversario}: {resultado} ({golos_marcados}-{golos_sofridos})"
+                lista_resultados.insert(tk.END, resultado_jogo)
+
+                if not equipas_adversarias:
+                    label_fim_campeonato = tk.Label(
+                        janela_jogo,
+                        text="Este campeonato acabou!",
+                        font=("Arial", 20),
+                        fg="red",
+                        bg="lightgreen",
+                    )
+                    label_fim_campeonato.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
+
+                    botao_sair = tk.Button(
+                        janela_jogo,
+                        text="Terminar Simulação",
+                        font=("Arial", 14),
+                        fg="white",
+                        bg="red",
+                        padx=10,
+                        pady=5,
+                        command=terminar_simulacao,
+                    )
+                    botao_sair.place(relx=0.85, rely=0.9, anchor=tk.CENTER)
+
+                    botao_voltar = tk.Button(
+                        janela_jogo,
+                        text="Voltar à Convocatória ",
+                        font=("Arial", 14),
+                        fg="white",
+                        bg="green",
+                        padx=10,
+                        pady=5,
+                        command=voltar_inicio,
+                    )
+                    botao_voltar.place(relx=0.15, rely=0.9, anchor=tk.CENTER)
+
+            else:
+                label_fim_campeonato = tk.Label(
+                    janela_jogo,
+                    text="Este campeonato acabou!",
+                    font=("Arial", 20),
+                    fg="red",
+                    bg="lightgreen",
+                )
+                label_fim_campeonato.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
+
         label_info = tk.Label(
             janela_jogo,
             text="O Campeonato vai iniciar e que ganhe o melhor!",
@@ -64,6 +135,28 @@ def abrir_janela_config():
             bg="darkgreen",
         )
         label_info.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+
+        botao_executar = tk.Button(
+            janela_jogo,
+            text="Executar Jogo",
+            font=("Arial", 14),
+            fg="white",
+            bg="blue",
+            padx=10,
+            pady=5,
+            command=executar_jogo,
+        )
+        botao_executar.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
+
+        lista_resultados = tk.Listbox(
+            janela_jogo,
+            width=40,
+            height=6,
+            font=("Arial", 16),
+            bg="darkgreen",
+            fg="yellow",
+        )
+        lista_resultados.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         janela_jogo.mainloop()
 
