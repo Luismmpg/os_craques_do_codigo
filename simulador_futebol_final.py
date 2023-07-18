@@ -3,6 +3,70 @@ from PIL import ImageTk, Image
 
 
 def abrir_janela_config():
+    def abrir_janela_jogo(equipa):
+        janela_jogo = tk.Toplevel(janela_config)
+        janela_jogo.title("Disputar Partidas")
+        janela_jogo_width = 800
+        janela_jogo_height = 600
+
+        screen_width = janela_jogo.winfo_screenwidth()
+        screen_height = janela_jogo.winfo_screenheight()
+
+        pos_x = (screen_width - janela_jogo_width) // 2
+        pos_y = (screen_height - janela_jogo_height) // 2
+
+        janela_jogo.geometry(
+            f"{janela_jogo_width}x{janela_jogo_height}+{pos_x}+{pos_y}"
+        )
+
+        # Carregar imagem de fundo
+        imagem_jogo_pil = Image.open("imagens/campo_futebol_00.jpg")
+        largura_jogo, altura_jogo = imagem_jogo_pil.size
+
+        # Definir o tamanho mínimo da janela para evitar erros
+        largura_minima = 800
+        altura_minima = 600
+
+        # Redimensionar a imagem para caber na janela
+        fator_escala = min(
+            1.0,
+            float(janela_jogo_width) / max(largura_jogo, largura_minima),
+            float(janela_jogo_height) / max(altura_jogo, altura_minima),
+        )
+        nova_largura_jogo = max(int(largura_jogo * fator_escala), largura_minima)
+        nova_altura_jogo = max(int(altura_jogo * fator_escala), altura_minima)
+        imagem_jogo_pil = imagem_jogo_pil.resize(
+            (nova_largura_jogo, nova_altura_jogo), Image.LANCZOS
+        )
+
+        imagem_jogo_tk = ImageTk.PhotoImage(imagem_jogo_pil)
+
+        # Exibir a imagem de fundo
+        canvas_jogo = tk.Canvas(
+            janela_jogo, width=nova_largura_jogo, height=nova_altura_jogo
+        )
+        canvas_jogo.create_image(0, 0, anchor=tk.NW, image=imagem_jogo_tk)
+        canvas_jogo.pack()
+
+        equipas_adversarias = [
+            "Braga",
+            "Famalicão",
+            "Portimonense",
+            "Paços de Ferreira",
+            "Casa Pia",
+            "Gil Vicente",
+        ]
+        label_info = tk.Label(
+            janela_jogo,
+            text="O Campeonato vai iniciar e que ganhe o melhor!",
+            font=("Arial", 22),
+            fg="yellow",
+            bg="darkgreen",
+        )
+        label_info.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+
+        janela_jogo.mainloop()
+
     janela_config = tk.Toplevel(menu)
     janela_config.title("Configuração do Jogo")
     janela_config_width = 800
@@ -170,6 +234,77 @@ def abrir_janela_config():
         command=lambda: remover_jogador(lista_jogadores_selecionados, lista_jogadores),
     )
     botao_direita.place(relx=0.78, rely=0.73, anchor=tk.CENTER)
+
+    # Botões radio para selecionar a equipa
+    equipa_radio_var = tk.StringVar(value=False)
+
+    def minha_equipa(equipa):
+        equipa_radio_var.set(equipa)
+        label_equipa_escolhida.config(text=f"Optou jogar pelo {equipa}")
+
+        botao_bora_jogar = tk.Button(
+            janela_config,
+            text="Bora Jogar!!!",
+            font=("Arial", 18),
+            fg="blue",
+            bg="orange",
+            padx=10,
+            pady=5,
+            command=lambda: abrir_janela_jogo(equipa),
+        )
+        botao_bora_jogar.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
+
+    equipa_radio_01 = tk.Radiobutton(
+        janela_config,
+        text="Benfica       ",
+        variable=equipa_radio_var,
+        value="Benfica",
+        font=("Arial", 12),
+        fg="red",
+        bg="lightgreen",
+        selectcolor="white",
+        command=lambda: minha_equipa("Benfica"),
+    )
+    equipa_radio_01.place(relx=0.4, rely=0.5, anchor=tk.CENTER)
+
+    equipa_radio_02 = tk.Radiobutton(
+        janela_config,
+        text="Sporting      ",
+        variable=equipa_radio_var,
+        value="Sporting",
+        font=("Arial", 12),
+        fg="darkgreen",
+        bg="lightgreen",
+        selectcolor="white",
+        command=lambda: minha_equipa("Sporting"),
+    )
+    equipa_radio_02.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
+
+    equipa_radio_03 = tk.Radiobutton(
+        janela_config,
+        text="Porto           ",
+        variable=equipa_radio_var,
+        value="Porto",
+        font=("Arial", 12),
+        fg="blue",
+        bg="lightgreen",
+        selectcolor="white",
+        command=lambda: minha_equipa("Porto"),
+    )
+    equipa_radio_03.place(relx=0.4, rely=0.6, anchor=tk.CENTER)
+
+    equipa_radio_04 = tk.Radiobutton(
+        janela_config,
+        text="Belenenses",
+        variable=equipa_radio_var,
+        value="Belenenses",
+        font=("Arial", 12),
+        fg="royalblue",
+        bg="lightgreen",
+        selectcolor="white",
+        command=lambda: minha_equipa("Belenenses"),
+    )
+    equipa_radio_04.place(relx=0.6, rely=0.6, anchor=tk.CENTER)
 
     janela_config.mainloop()
 
